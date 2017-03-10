@@ -7,7 +7,7 @@ run_test() {
 	# create database if needed
 	if [ ! -f "$db" ]; then
 		rrdtool create "$db" \
-			--step 300 \
+			--step 60 \
 			DS:pl:GAUGE:600:0:100 \
 			DS:rtt:GAUGE:600:0:10000000 \
 			RRA:AVERAGE:0.5:1:800 \

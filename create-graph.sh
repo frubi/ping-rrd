@@ -4,7 +4,7 @@ windows="day:86400:60 week:604800:1800 month:2592000:7200 year:31536000:86400"
 
 peers="$(cat peers.txt 2> /dev/null)"
 for peer in $peers; do
-	db="ping_$peer_db.rrd"
+	db="ping_${peer}_db.rrd"
 	if [ ! -f "$db" ]; then
 		continue
 	fi
@@ -14,7 +14,7 @@ for peer in $peers; do
 		start=$(echo "$window" | cut -d: -f2)
 		end=$(echo "$window" | cut -d: -f3)
 
-		output="ping_$peer_$name.png"
+		output="ping_${peer}_${name}.png"
 
 		rrdtool graph "$output" -h 225 -w 600 -a PNG \
 			--lazy --start -$start --end -$end \
