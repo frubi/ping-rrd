@@ -1,0 +1,8 @@
+# Use bash as shell for cron command calls
+SHELL=/bin/bash
+# Use same path as the normal login users
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ 
+# m h  dom mon dow   command
+* *	* * *	cd /home/pi/ping-rrd/ && ./ping-worker.sh
+*/5 *	* * *	cd /home/pi/ping-rrd/ && ./create-graph.sh

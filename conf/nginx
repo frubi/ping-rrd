@@ -1,0 +1,7 @@
+location = / {
+        return 301 /ping-rrd/;
+}
+
+location /ping-rrd {
+        alias /home/pi/ping-rrd/out;
+}
