@@ -2,7 +2,7 @@
 
 run_test() {
 	peer="$1"
-	db="ping_${peer}_db.rrd"
+	db="db/ping_${peer}_db.rrd"
 
 	# create database if needed
 	if [ ! -f "$db" ]; then
@@ -24,7 +24,7 @@ run_test() {
 	result=$(ping -q -n -c 10 -w 30 "$peer" 2>&1)
 
 	# extract values from output
-	values=$(echo "$result" | awk '
+	values=$(echo "$result" | gawk '
         BEGIN {
         	pl=100
         	rtt=0.1

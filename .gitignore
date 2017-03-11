@@ -1,0 +1,4 @@
+db/*.rrd
+out/*.html
+out/*.png
+
