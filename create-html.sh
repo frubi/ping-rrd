@@ -106,5 +106,5 @@ echo "$index_footer" >> "out/index.html"
 
 # create host pages
 while read addr comment; do
-	echo "$host_page" | sed "s/\[ADDR\]/$addr/g; s/\[CMNT\]/$comment/g;" >> "out/host_${addr}.html"
+	echo "$host_page" | sed "s/\[ADDR\]/$addr/g; s/\[CMNT\]/$comment/g;" > "out/host_${addr}.html"
 done < peers.txt
