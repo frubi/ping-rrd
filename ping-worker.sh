@@ -47,10 +47,9 @@ run_test() {
 }
 
 # run pings in parallel
-peers="$(cat peers.txt 2> /dev/null)"
-for peer in $peers; do
-	run_test "$peer" &
-done
+while read addr comment; do
+	run_test "$addr" &
+done < peers.txt
 
 # wait for completion of background tasks
 wait

@@ -28,7 +28,7 @@ index_host=$(cat <<EOF
 <a href="host_[ADDR].html">
 <div class="panel-box">
 	<div class="panel-heading">
-		Host [ADDR]
+		Host [ADDR] [CMNT]
 	</div>
 	<div class="panel-content">
 		<img src="ping_[ADDR]_day.png">
@@ -48,7 +48,7 @@ host_page=$(cat <<EOF
 </head>
 <body>
 <div class="header-box">
-	<div class="header-text"><span class="header-text-pri"><a href="index.html">Round-Trip &amp; Packetloss Stats</a></span><span class="header-text-sec">&#x2B62; [ADDR]</span></div>
+	<div class="header-text"><span class="header-text-pri"><a href="index.html">Round-Trip &amp; Packetloss Stats</a></span><span class="header-text-sec">&#x2B62; [ADDR] [CMNT]</span></div>
 </div>
 
 <div class="content-box">
@@ -97,16 +97,14 @@ EOF
 # create index page
 echo "$index_header" > "out/index.html"
 
-peers="$(cat peers.txt 2> /dev/null)"
-for peer in $peers; do
-	echo "$index_host" | sed "s/\[ADDR\]/$peer/g" >> "out/index.html"
-done
+while read addr comment; do
+	echo "$index_host" | sed "s/\[ADDR\]/$addr/g; s/\[CMNT\]/$comment/g;" >> "out/index.html"
+done < peers.txt
 
 echo "$index_footer" >> "out/index.html"
 
 
 # create host pages
-peers="$(cat peers.txt 2> /dev/null)"
-for peer in $peers; do
-	echo "$host_page" | sed "s/\[ADDR\]/$peer/g" >> "out/host_${peer}.html"
-done
+while read addr comment; do
+	echo "$host_page" | sed "s/\[ADDR\]/$addr/g; s/\[CMNT\]/$comment/g;" >> "out/host_${addr}.html"
+done < peers.txt

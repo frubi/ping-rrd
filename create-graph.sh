@@ -2,9 +2,8 @@
 
 windows="day:86400:60 week:604800:1800 month:2592000:7200 year:31536000:86400"
 
-peers="$(cat peers.txt 2> /dev/null)"
-for peer in $peers; do
-	db="db/ping_${peer}_db.rrd"
+while read addr comment; do
+	db="db/ping_${addr}_db.rrd"
 	if [ ! -f "$db" ]; then
 		continue
 	fi
@@ -14,7 +13,7 @@ for peer in $peers; do
 		start=$(echo "$window" | cut -d: -f2)
 		end=$(echo "$window" | cut -d: -f3)
 
-		output="out/ping_${peer}_${name}.png"
+		output="out/ping_${addr}_${name}.png"
 
 		rrdtool graph "$output" -h 225 -w 600 -a PNG \
 			--lazy --start -$start --end -$end \
@@ -44,6 +43,6 @@ for peer in $peers; do
 			AREA:PL100#ff0000:"75-100%":STACK \
 			COMMENT:"(Packet Loss Percentage)"
 	done
-done
+done < peers.txt
 
 exit 0
